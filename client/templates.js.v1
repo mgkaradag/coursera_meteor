@@ -1,0 +1,89 @@
+
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo'
+import { Template } from 'meteor/templating';
+import  {confirm, cancel, action}  from 'jquery-confirm';
+import { ReactiveVar } from 'meteor/reactive-var';
+
+import './main.html';
+import './templates.html';
+import '../startup/startup.js'; 
+
+
+
+//Template.images.helpers({images:img}); // Basically, Template helpers perform "compile, data creation and HTML creation" operations of "Handlebars". 
+// HELPERS
+Template.images.helpers({images:Images.find()});
+var templateInstance;
+
+// EVENTS
+/*
+Template.images.events({
+  'click js-image' (event) {
+    console.log("dsdd");
+    $(event.target).css("width", "50px");
+  }
+}) ;
+
+*/
+Template.images.onRendered(function () {
+    console.log("OnRendered: "+this);
+     templateInstance = this;
+    console.log("Onrendered Template Instance: "+templateInstance.toString());
+});
+
+Template.images.events({
+  'click .js-image'(event){
+    $(event.target).css("width", "50px");
+    },
+  'click .js-delete-image': function(event){
+      var ID = this._id;
+
+      $.confirm({
+          title: null,
+          content: 'Do you want to remove the image?',
+          buttons: {
+              confirm: function () {
+
+                  //  var id= Images.findOne({"_id":ID}).img_ID;
+                  templateInstance.$('#'+ID).hide('slow', function () {
+                      $('#'+ID).detach();
+                  });
+                  console.log("ID: "+ID);
+                  $.alert('Confirmed!');
+              },
+              cancel: function () {
+                  $.alert('Canceled!');
+              }
+          }
+      });
+
+
+   /* Images.remove({"_id":ID});*/
+  }
+
+  });
+
+
+
+
+
+/*
+Template.hello.onCreated(function helloOnCreated() {
+  // counter starts at 0
+  this.counter = new ReactiveVar(0);
+});
+
+Template.hello.helpers({
+  counter() {
+    return Template.instance().counter.get();
+  },
+});
+
+Template.hello.events({
+  'click button'(event, instance) {
+    // increment the counter when button is clicked
+    instance.counter.set(instance.counter.get() + 1);
+  },
+});
+*/

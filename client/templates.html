@@ -1,0 +1,71 @@
+
+<!-- Includes the following templates; 
+  
+  --- img_upload
+  --- images
+
+-->
+
+<template name="img_upload">
+    <button type="button" class="btn btn-default js-show-img-form">Upload your own image</button>
+    <div class="modal fade" id="img_upload_modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload your own image</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form class="js-img-upload" align="center">
+                        Image URL<br>
+                        <input type="text" name="img_src"><br>
+                        Image description<br>
+                        <input type="text" name="img_alt">
+                        <button class="btn btn-success">Upload</button>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>
+<!--
+<template name="img_upload">
+    <form class="js-img-upload" align="center">
+        Image URL<br>
+        <input type="text" name="img_src"><br>
+        Image description<br>
+        <input type="text" name="img_alt">
+        <button  >Upload</button>
+    </form>
+</template>
+-->
+
+<template name="images">
+  <h2 id="h2" align="center">Here are some nice images</h2>
+    <p></p>
+  {{#each images}}
+    <div class="col-md-6 col-sm-4 col-xs-12" id="{{_id}}" data-lastid ="{{lastID}}">
+      <div class="thumbnail">
+        <img class="js-image" src="{{img_src}}" alt="{{img_txt}}">
+        <div class="caption">
+          <h3>Rated {{rate}}</h3>
+          <p>Description of the image</p>
+            <p>{{>starsRating mutable=true class='js-img-rating' ID=_id}} </p>
+          <button class="js-delete-image btn btn-warning">delete</button>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+    {{#if deleted}}
+        <div class="col-md-12 col-sm-12 myImg">
+            <button class="js-delete-undo btn btn-info">Undo</button>
+        </div>
+    {{/if}}
+
+</template>
+

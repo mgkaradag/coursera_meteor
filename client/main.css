@@ -1,0 +1,11 @@
+/* CSS declarations go here */
+.myImg {
+	vertical-align: top;
+	border: 0px solid;
+	margin-bottom: 10px;
+}
+
+.shine_me{
+    cursor:pointer;
+    margin-bottom:10px;
+    }
